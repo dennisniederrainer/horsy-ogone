@@ -1,0 +1,102 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright   Copyright (c) 2009 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<?php
+/** @var Netresearch_OPS_Block_Form $this */
+
+$_code = $this->getMethodCode();
+$isUserRegistering = $this->isUserRegistering();
+?>
+
+<script type="text/javascript">
+    Translator.add(
+        'Payment failed. Please select another payment method.',
+        '<?php echo Mage::helper('ops')->__('Payment failed. Please select another payment method.') ?>'
+    );
+    Translator.add(
+        'Payment failed. Please review your input or select another payment method.',
+        '<?php echo Mage::helper('ops')->__(
+            'Payment failed. Please review your input or select another payment method.'
+        ) ?>'
+    );
+    Translator.add(
+        'This is a required field.',
+        '<?php echo Mage::helper('ops')->__('This is a required field.') ?>'
+    );
+</script>
+
+
+<ul class="form-list ops-form-list" id="payment_form_<?php echo $_code ?>" style="display:none;">
+
+    <?php if ($_code == 'ops_bankTransfer') : ?>
+        <li>
+            <label class="required-entry" for="ops_banktransfer_country_id"><?php echo $this->__(
+                    'Country'
+                ); ?></label><br/>
+            <select title="ops_banktransfer_country_id" class="required-entry" name="payment[country_id]"
+                    id="ops_banktransfer_country_id">
+                <option value=""><?php echo $this->__('--Please Select--') ?></option>
+                <?php foreach ($this->getBankTransferCountryIds() as $countryId) : ?>
+                    <?php if ('*' == $countryId || '' == $countryId): ?>
+                        <option value="*">
+                            <?php echo Mage::helper('ops')->__('Miscellaneous Countries'); ?>
+                        </option>
+                    <?php else: ?>
+                        <option value="<?php echo $countryId; ?>">
+                            <?php echo Mage::getModel('directory/country')->loadByCode($countryId)->getName(); ?>
+                        </option>
+                    <?php endif ?>
+                <?php endforeach; ?>
+            </select>
+        </li>
+    <?php elseif ($_code == 'ops_directEbanking') : ?>
+        <?php $brands = $this->getDirectEbankingBrands(); ?>
+        <?php if (count($brands) == 1): ?>
+            <li><input type="hidden" name="payment[directEbanking_brand]" id="ops_directEbanking_country_id"
+                       value="<?php echo $this->escapeHtml(current($brands)); ?>"></li>
+        <?php endif; ?>
+        <?php if (1 < count($brands)): ?>
+            <li>
+                <label class="required-entry" for="ops_directEbanking_country_id"><?php echo $this->__(
+                        'country'
+                    ); ?></label><br/>
+                <select class="required-entry" name="payment[directEbanking_brand]" id="ops_directEbanking_country_id">
+                    <option value=""><?php echo $this->__('--Please Select--') ?></option>
+                    <?php foreach ($brands as $brand) : ?>
+                        <option value="<?php echo $brand; ?>">
+                            <?php echo Mage::helper('ops')->__($brand); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </li>
+        <?php endif; ?>
+    <?php else : ?>
+        <?php echo $this->__('You will be redirected to Ingenico ePayments website when you place an order.') ?>
+    <?php endif; ?>
+</ul>
+
+
