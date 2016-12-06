@@ -17,9 +17,9 @@ class Netresearch_OPS_PaymentController extends Netresearch_OPS_Controller_Abstr
      */
     public function placeformAction()
     {
-
-
         $lastIncrementId = $this->_getCheckout()->getLastRealOrderId();
+        // echo Mage::getSingleton('checkout/type_multishipping')->getLastRealOrderId();
+        // die($lastIncrementId);
 
         if ($lastIncrementId) {
             $order = Mage::getModel('sales/order');

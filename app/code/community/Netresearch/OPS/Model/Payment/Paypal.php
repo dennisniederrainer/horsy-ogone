@@ -1,10 +1,10 @@
 <?php
 /**
  * Netresearch_OPS_Model_Payment_Paypal
- * 
- * @package   
+ *
+ * @package
  * @copyright 2011 Netresearch
- * @author    Thomas Kappel <thomas.kappel@netresearch.de> 
+ * @author    Thomas Kappel <thomas.kappel@netresearch.de>
  * @license   OSL 3.0
  */
 class Netresearch_OPS_Model_Payment_Paypal
@@ -12,6 +12,7 @@ class Netresearch_OPS_Model_Payment_Paypal
 {
     protected $pm = 'PAYPAL';
     protected $brand = 'PAYPAL';
+    protected $_canUseForMultishipping = true;
 
     /** Check if we can capture directly from the backend */
     protected $_canBackendDirectCapture = true;
@@ -23,4 +24,3 @@ class Netresearch_OPS_Model_Payment_Paypal
     protected $_code = 'ops_paypal';
 
 }
-

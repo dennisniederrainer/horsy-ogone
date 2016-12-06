@@ -675,6 +675,7 @@ class Netresearch_OPS_Model_Observer
      */
     public function sendTransactionalEmails(Varien_Event_Observer $observer)
     {
+        return;
         /** @var Mage_Sales_Model_Order $order */
         $order = $observer->getOrder();
         if (!$order->getPayment()->getMethodInstance() instanceof Netresearch_OPS_Model_Payment_Abstract) {
